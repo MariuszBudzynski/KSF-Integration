@@ -1,3 +1,5 @@
+using KSF_Integration.API.Services;
+using KSF_Integration.API.Services.Interfaces;
 using KSF_Integration.API.Servises;
 using KSF_Integration.API.Servises.Interfaces;
 
@@ -13,6 +15,8 @@ builder.Services.AddHttpClient("KsefClient", client =>
 });
 
 builder.Services.AddScoped<IAuthChallengeService, AuthChallengeService>();
+builder.Services.AddScoped<IAuthTokenRequestBuilder, AuthTokenRequestBuilder>();
+
 
 var app = builder.Build();
 
