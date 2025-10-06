@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient("KsefClient", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["Ksef:BaseAddress"]);
+    client.BaseAddress = new Uri(builder.Configuration["Ksef:BaseAddress"]!);
 });
 
 builder.Services.AddScoped<IAuthChallengeService, AuthChallengeService>();

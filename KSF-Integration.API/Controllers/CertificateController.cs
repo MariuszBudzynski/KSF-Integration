@@ -38,8 +38,10 @@ namespace KSF_Integration.API.Controllers
 
 
             //2) xml generation
+            if (challenge == null) return BadRequest();
+
             var identifier = _configuration["Ksef:ContextIdentifier:Identifier"];
-            var xml = _authTokenRequestBuilder.GenerateAuthTokenRequestXml(challenge.Challenge, identifier);
+            var xml = _authTokenRequestBuilder.GenerateAuthTokenRequestXml(challenge.Challenge, identifier!);
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Ksef", "AuthTokenRequest.xml");
             _authTokenRequestBuilder.SaveToFile(xml, filePath);
 
@@ -48,6 +50,6 @@ namespace KSF_Integration.API.Controllers
 
         }
 
-        private record AuthChallenge(string Challenge, string Timestamp);
+        private sealed record AuthChallenge(string Challenge, string Timestamp);
     }
 }

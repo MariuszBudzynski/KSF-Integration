@@ -14,7 +14,6 @@ namespace KSF_Integration.API.Servises
         }
         public async Task<string> GetAuthChallengeAsync(HttpClient _httpClient)
         {
-            var path = _configuration["Ksef:AuthChallengePath"];
             var type = _configuration["Ksef:ContextIdentifier:Type"];
             var identifier = _configuration["Ksef:ContextIdentifier:Identifier"];
             var userAgent = _configuration["Ksef:Headers:UserAgent"];

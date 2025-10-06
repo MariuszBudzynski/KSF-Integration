@@ -6,10 +6,10 @@ namespace KSF_Integration.Models
     public class AuthTokenRequest
     {
         [XmlElement("Challenge")]
-        public string Challenge { get; set; }
+        public string? Challenge { get; set; }
 
         [XmlElement("ContextIdentifier")]
-        public ContextIdentifier ContextIdentifier { get; set; }
+        public ContextIdentifier? ContextIdentifier { get; set; }
 
         [XmlElement("SubjectIdentifierType")]
         public string SubjectIdentifierType { get; set; } = "certificateSubject";
@@ -18,6 +18,6 @@ namespace KSF_Integration.Models
     public class ContextIdentifier
     {
         [XmlElement("Nip")]
-        public string Nip { get; set; }
+        public string? Nip { get; set; }
     }
 }
