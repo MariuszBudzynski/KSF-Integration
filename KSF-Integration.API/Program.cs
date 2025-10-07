@@ -17,6 +17,7 @@ builder.Services.AddHttpClient("KsefClient", client =>
 builder.Services.AddScoped<IAuthChallengeService, AuthChallengeService>();
 builder.Services.AddScoped<IAuthTokenRequestBuilder, AuthTokenRequestBuilder>();
 builder.Services.AddScoped<ICertificateProcessService, CertificateProcessService>();
+builder.Services.AddScoped<IXadesSignService, XadesSignService>();
 
 
 var app = builder.Build();

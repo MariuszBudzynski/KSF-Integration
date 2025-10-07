@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.API", "KSF-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.Models", "KSF_Integration.Models\KSF-Integration.Models.csproj", "{5743F67E-5373-E3B2-FA0B-6D89F12FED3A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.TestCertificateGenerator", "KSF-Integration.TestCertificateGenerator\KSF-Integration.TestCertificateGenerator.csproj", "{8B121F2C-FBE4-4722-8958-6AAFC2E04603}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5743F67E-5373-E3B2-FA0B-6D89F12FED3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5743F67E-5373-E3B2-FA0B-6D89F12FED3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5743F67E-5373-E3B2-FA0B-6D89F12FED3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B121F2C-FBE4-4722-8958-6AAFC2E04603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B121F2C-FBE4-4722-8958-6AAFC2E04603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B121F2C-FBE4-4722-8958-6AAFC2E04603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B121F2C-FBE4-4722-8958-6AAFC2E04603}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

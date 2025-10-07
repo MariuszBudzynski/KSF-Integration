@@ -21,11 +21,11 @@ namespace KSF_Integration.API.Services
             var settings = new XmlWriterSettings
             {
                 Indent = true,
-                Encoding = new UTF8Encoding(false),
+                Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: true), // ✅ BOM enabled
                 OmitXmlDeclaration = false
             };
 
-            using var stringWriter = new StringWriter();
+            using var stringWriter = new StringWriterWithEncoding(settings.Encoding);
             using var xmlWriter = XmlWriter.Create(stringWriter, settings);
 
             xmlSerializer.Serialize(xmlWriter, request);
@@ -35,7 +35,20 @@ namespace KSF_Integration.API.Services
         public void SaveToFile(string xmlContent, string filePath)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
-            File.WriteAllText(filePath, xmlContent, Encoding.UTF8);
+            File.WriteAllText(filePath, xmlContent, new UTF8Encoding(encoderShouldEmitUTF8Identifier: true)); // ✅ BOM enabled
         }
+    }
+
+    //Custom StringWriter that respects encoding
+    public class StringWriterWithEncoding : StringWriter
+    {
+        private readonly Encoding _encoding;
+
+        public StringWriterWithEncoding(Encoding encoding)
+        {
+            _encoding = encoding;
+        }
+
+        public override Encoding Encoding => _encoding;
     }
 }
