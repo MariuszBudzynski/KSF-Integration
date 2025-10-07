@@ -7,18 +7,13 @@ namespace KSF_Integration.API.Servises
 {
     public class AuthChallengeService : IAuthChallengeService
     {
-        private readonly IConfiguration _configuration;
-        public AuthChallengeService(IConfiguration configuration)
+        public async Task<string> GetAuthChallengeAsync(HttpClient httpClient, IConfiguration configuration)
         {
-            _configuration = configuration;
-        }
-        public async Task<string> GetAuthChallengeAsync(HttpClient _httpClient)
-        {
-            var type = _configuration["Ksef:ContextIdentifier:Type"];
-            var identifier = _configuration["Ksef:ContextIdentifier:Identifier"];
-            var userAgent = _configuration["Ksef:Headers:UserAgent"];
-            var acceptLanguage = _configuration["Ksef:Headers:AcceptLanguage"];
-            var cacheControl = _configuration["Ksef:Headers:CacheControl"];
+            var type = configuration["Ksef:ContextIdentifier:Type"];
+            var identifier = configuration["Ksef:ContextIdentifier:Identifier"];
+            var userAgent = configuration["Ksef:Headers:UserAgent"];
+            var acceptLanguage = configuration["Ksef:Headers:AcceptLanguage"];
+            var cacheControl = configuration["Ksef:Headers:CacheControl"];
 
             var request = new HttpRequestMessage(HttpMethod.Post, "api/v2/auth/challenge");
 
@@ -41,7 +36,7 @@ namespace KSF_Integration.API.Servises
             request.Headers.Add("Cache-Control", cacheControl);
 
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await httpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {

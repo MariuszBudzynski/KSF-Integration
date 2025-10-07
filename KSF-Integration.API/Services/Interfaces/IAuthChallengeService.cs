@@ -2,6 +2,6 @@
 {
     public interface IAuthChallengeService
     {
-        Task<string> GetAuthChallengeAsync(HttpClient _httpClient);
+        Task<string> GetAuthChallengeAsync(HttpClient httpClient, IConfiguration configuration);
     }
 }
