@@ -47,7 +47,7 @@ namespace KSF_Integration.API.Services
             _authTokenRequestBuilder.SaveToFile(xml, _filePath);
 
             //3) singing generated xml
-            var cert = new X509Certificate2(@"Data\Ksef\testcert.pfx", "test123");
+            var cert = new X509Certificate2(_configuration["Ksef:Certificate:Path"]!, _configuration["Ksef:Certificate:Password"]);
             _xadesSignService.SignAuthTokenRequest(_filePath, _filePath, cert);
 
             // TODO: Replace with actual implementation logic
