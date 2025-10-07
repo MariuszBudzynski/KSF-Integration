@@ -16,4 +16,5 @@ You can generate it using the `KSF-Integration.TestCertificateGenerator` console
 ---
 
 📌 **Note:** This setup is intended for development and testing only. Do not use in production environments.
+
 📌 **Note:** Password storred is appsetings is fake and used only for testing purposes.
