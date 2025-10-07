@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.API", "KSF-Integration.API\KSF-Integration.API.csproj", "{0F0A1F57-7FA8-4AB7-813D-F18F5BD5C7EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF_Integration.Models", "KSF_Integration.Models\KSF_Integration.Models.csproj", "{852C8DC7-97D6-4401-AD1F-C2225310EDBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.Models", "KSF_Integration.Models\KSF-Integration.Models.csproj", "{852C8DC7-97D6-4401-AD1F-C2225310EDBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

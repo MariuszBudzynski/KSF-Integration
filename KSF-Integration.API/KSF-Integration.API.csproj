@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KSF_Integration.Models\KSF_Integration.Models.csproj" />
+    <ProjectReference Include="..\KSF_Integration.Models\KSF-Integration.Models.csproj" />
   </ItemGroup>
 
 </Project>
