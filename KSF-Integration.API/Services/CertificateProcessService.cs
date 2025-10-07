@@ -11,7 +11,7 @@ namespace KSF_Integration.API.Services
         private readonly IAuthChallengeService _authChallengeService;
         private readonly IAuthTokenRequestBuilder _authTokenRequestBuilder;
         private readonly IConfiguration _configuration;
-        private readonly Interfaces.ISignService _xadesSignService;
+        private readonly ISignService _xadesSignService;
         private readonly string _filePath;
 
         public CertificateProcessService(
@@ -19,7 +19,7 @@ namespace KSF_Integration.API.Services
             IAuthChallengeService authChallengeService,
             IAuthTokenRequestBuilder authTokenRequestBuilder,
             IConfiguration configuration,
-            Interfaces.ISignService xadesSignService
+            ISignService xadesSignService
             )
         {
             _httpClient = httpClientFactory.CreateClient("KsefClient");
@@ -47,7 +47,7 @@ namespace KSF_Integration.API.Services
             _authTokenRequestBuilder.SaveToFile(xml, _filePath);
 
             //3) singing generated xml
-            var cert = new X509Certificate2(_configuration["Ksef:Certificate:Path"]!, _configuration["Ksef:Certificate:Password"]);
+            var cert = new X509Certificate2(_configuration["Ksef:Certificate:Path"]!, "test123");
             _xadesSignService.SignAuthTokenRequest(_filePath, _filePath, cert);
 
             // TODO: Replace with actual implementation logic
