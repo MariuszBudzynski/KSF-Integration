@@ -11,7 +11,7 @@ namespace KSF_Integration.API.Services
         private readonly IAuthChallengeService _authChallengeService;
         private readonly IAuthTokenRequestBuilder _authTokenRequestBuilder;
         private readonly IConfiguration _configuration;
-        private readonly IXadesSignService _xadesSignService;
+        private readonly Interfaces.ISignService _xadesSignService;
         private readonly string _filePath;
 
         public CertificateProcessService(
@@ -19,7 +19,7 @@ namespace KSF_Integration.API.Services
             IAuthChallengeService authChallengeService,
             IAuthTokenRequestBuilder authTokenRequestBuilder,
             IConfiguration configuration,
-            IXadesSignService xadesSignService
+            Interfaces.ISignService xadesSignService
             )
         {
             _httpClient = httpClientFactory.CreateClient("KsefClient");

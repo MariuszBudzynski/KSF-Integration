@@ -2,7 +2,7 @@
 
 namespace KSF_Integration.API.Services.Interfaces
 {
-    public interface IXadesSignService
+    public interface ISignService
     {
         void SignAuthTokenRequest(string xmlPath, string outputPath, X509Certificate2 certificate);
     }

@@ -5,7 +5,7 @@ using System.Xml;
 
 namespace KSF_Integration.API.Services
 {
-    public class XadesSignService : IXadesSignService
+    public class SignService : ISignService
     {
         public void SignAuthTokenRequest(string xmlPath, string outputPath, X509Certificate2 certificate)
         {
