@@ -21,9 +21,9 @@ namespace KSF_Integration.API.Controllers
                 await _certificateProcessService.ProcessCertificateAsync();
                 return Ok();
             }
-            catch (InvalidOperationException)
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest($"Error: {ex.Message}");
             }
         }
     }

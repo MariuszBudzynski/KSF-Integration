@@ -1,58 +1,65 @@
-﻿using KSF_Integration.API.Services.Interfaces;
-using KSF_Integration.API.Servises.Interfaces;
+﻿using KSeF.Client;
+using KSeF.Client.Api.Builders.Auth;
+using KSeF.Client.Api.Builders.X509Certificates;
+using KSeF.Client.Core.Interfaces;
+using KSeF.Client.Core.Models.Authorization;
+using KSF_Integration.API.Services.Interfaces;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 
 namespace KSF_Integration.API.Services
 {
     public class CertificateProcessService : ICertificateProcessService
     {
-        private readonly HttpClient _httpClient;
-        private readonly IAuthChallengeService _authChallengeService;
-        private readonly IAuthTokenRequestBuilder _authTokenRequestBuilder;
-        private readonly IConfiguration _configuration;
-        private readonly ISignService _xadesSignService;
-        private readonly string _filePath;
+        private readonly IKSeFClient _ksefClient;
+        private readonly ISignatureService _signatureService;
 
         public CertificateProcessService(
-            IHttpClientFactory httpClientFactory,
-            IAuthChallengeService authChallengeService,
-            IAuthTokenRequestBuilder authTokenRequestBuilder,
-            IConfiguration configuration,
-            ISignService xadesSignService
-            )
+          IKSeFClient ksefClient, ISignatureService signatureService)
         {
-            _httpClient = httpClientFactory.CreateClient("KsefClient");
-            _authChallengeService = authChallengeService;
-            _authTokenRequestBuilder = authTokenRequestBuilder;
-            _configuration = configuration;
-            _xadesSignService = xadesSignService;
-            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Ksef", "AuthTokenRequest.xml");
+            _ksefClient = ksefClient;
+            _signatureService = signatureService;
         }
 
+        // refactor after
         public async Task ProcessCertificateAsync()
         {
-            //1) get Auth Challenge
-            var authChallenge = await _authChallengeService.GetAuthChallengeAsync(_httpClient, _configuration);
-            var challenge = JsonSerializer.Deserialize<AuthChallenge>(
-                authChallenge,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            // Step 1: Request authentication challenge from KSeF
+            var challengeResponse = await _ksefClient.GetAuthChallengeAsync();
 
-            if (challenge == null)
-                throw new InvalidOperationException("Received data is null or does not match the expected format.");
+            // Step 2: Generate the document 
+            var authTokenRequest = AuthTokenRequestBuilder
+           .Create()
+           .WithChallenge(challengeResponse.Challenge)
+           .WithContext(ContextIdentifierType.Nip, "1234567890")
+           .WithIdentifierType(SubjectIdentifierTypeEnum.CertificateSubject)
+           .Build();
 
-            //2) xml generation
-            var identifier = _configuration["Ksef:ContextIdentifier:Identifier"];
-            var xml = _authTokenRequestBuilder.GenerateAuthTokenRequestXml(challenge.Challenge, identifier!);
-            _authTokenRequestBuilder.SaveToFile(xml, _filePath);
+            // Step 3: Generate the test certificate
+            var ownerCertificate = GetPersonalCertificate("Jan", "Kowalski", "TINPL", "1234567890", "M B");
 
-            //3) singing generated xml
-            var cert = new X509Certificate2(_configuration["Ksef:Certificate:Path"]!, "test123");
-            _xadesSignService.SignAuthTokenRequest(_filePath, _filePath, cert);
+            // Step 4: Sign in the document
+            var xml = AuthTokenRequestSerializer.SerializeToXmlString(authTokenRequest);
+            var signedXml = _signatureService.Sign(xml, ownerCertificate);
 
-            // TODO: Replace with actual implementation logic
+            //Step 5: Send signed document
+            var authOperationInfo = await _ksefClient.SubmitXadesAuthRequestAsync(signedXml, verifyCertificateChain: false);
         }
 
-        private sealed record AuthChallenge(string Challenge, string Timestamp);
+        private static X509Certificate2 GetPersonalCertificate(
+        string givenName,
+        string surname,
+        string serialNumberPrefix,
+        string serialNumber,
+        string commonName)
+        {
+            X509Certificate2 certificate = SelfSignedCertificateForSignatureBuilder
+                        .Create()
+                        .WithGivenName(givenName)
+                        .WithSurname(surname)
+                        .WithSerialNumber($"{serialNumberPrefix}-{serialNumber}")
+                        .WithCommonName(commonName)
+                        .Build();
+            return certificate;
+        }
     }
 }

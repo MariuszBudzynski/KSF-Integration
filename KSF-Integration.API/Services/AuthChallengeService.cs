@@ -1,9 +1,9 @@
-﻿using KSF_Integration.API.Servises.Interfaces;
+﻿using KSF_Integration.API.Services.Interfaces;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
-namespace KSF_Integration.API.Servises
+namespace KSF_Integration.API.Services
 {
     public class AuthChallengeService : IAuthChallengeService
     {
@@ -22,8 +22,8 @@ namespace KSF_Integration.API.Servises
             {
                 contextIdentifier = new
                 {
-                    type = type,
-                    identifier = identifier
+                    type,
+                    identifier
                 }
             };
 

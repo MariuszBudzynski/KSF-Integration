@@ -1,7 +1,8 @@
+using KSeF.Client.Api.Services;
+using KSeF.Client.Core.Interfaces;
+using KSeF.Client.DI;
 using KSF_Integration.API.Services;
 using KSF_Integration.API.Services.Interfaces;
-using KSF_Integration.API.Servises;
-using KSF_Integration.API.Servises.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddHttpClient("KsefClient", client =>
+builder.Services.AddKSeFClient(options =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["Ksef:BaseAddress"]!);
+    options.BaseUrl = KsefEnviromentsUris.TEST;
 });
 
-builder.Services.AddScoped<IAuthChallengeService, AuthChallengeService>();
-builder.Services.AddScoped<IAuthTokenRequestBuilder, AuthTokenRequestBuilder>();
 builder.Services.AddScoped<ICertificateProcessService, CertificateProcessService>();
-builder.Services.AddScoped<ISignService, SignService>();
+builder.Services.AddScoped<ISignatureService, SignatureService>();
 
 
 var app = builder.Build();

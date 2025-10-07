@@ -5,15 +5,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>KSF_Integration.API</RootNamespace>
+    <UserSecretsId>dda2276f-5dae-4eec-bdf6-c8a43cf09ac8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="KSEFAPI.KSEFAPIClient" Version="1.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.19" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KSF_Integration.Models\KSF-Integration.Models.csproj" />
+    <ProjectReference Include="..\KSeF.Client\KSeF.Client.csproj" />
   </ItemGroup>
 
 </Project>

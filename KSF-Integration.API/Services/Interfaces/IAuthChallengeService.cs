@@ -1,4 +1,4 @@
-﻿namespace KSF_Integration.API.Servises.Interfaces
+﻿namespace KSF_Integration.API.Services.Interfaces
 {
     public interface IAuthChallengeService
     {
