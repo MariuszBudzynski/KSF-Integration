@@ -9,4 +9,4 @@ The documentation will be updated upon completion of the implementation.
 ### 🧩 Dependencies
 
 This API relies on the [`KSeF.Client`](https://github.com/CIRFMF/ksef-client-csharp) library,  
-provided by KSeF under a free license.It is used in the **test environment only**.
+provided by KSeF under a free license. It is used in the **test environment only**.
