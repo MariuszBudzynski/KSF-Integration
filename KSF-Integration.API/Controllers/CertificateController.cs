@@ -26,7 +26,5 @@ namespace KSF_Integration.API.Controllers
                 return BadRequest();
             }
         }
-
-        private sealed record AuthChallenge(string Challenge, string Timestamp);
     }
 }
