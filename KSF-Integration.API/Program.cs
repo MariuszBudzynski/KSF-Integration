@@ -15,9 +15,9 @@ builder.Services.AddKSeFClient(options =>
     options.BaseUrl = KsefEnviromentsUris.TEST;
 });
 
-builder.Services.AddScoped<ICertificateProcessService, CertificateProcessService>();
+builder.Services.AddScoped<IKsefAuthService, KsefAuthService>();
 builder.Services.AddScoped<ISignatureService, SignatureService>();
-
+builder.Services.AddSingleton<KsefContextStorage>();
 
 var app = builder.Build();
 

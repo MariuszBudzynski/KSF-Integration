@@ -8,20 +8,24 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace KSF_Integration.API.Services
 {
-    public class CertificateProcessService : ICertificateProcessService
+    public class KsefAuthService : IKsefAuthService
     {
         private readonly IKSeFClient _ksefClient;
         private readonly ISignatureService _signatureService;
+        private readonly KsefContextStorage _ksefContextStorage;
 
-        public CertificateProcessService(
-          IKSeFClient ksefClient, ISignatureService signatureService)
+        public KsefAuthService(
+          IKSeFClient ksefClient,
+          ISignatureService signatureService,
+          KsefContextStorage ksefContextStorage)
         {
             _ksefClient = ksefClient;
             _signatureService = signatureService;
+            _ksefContextStorage = ksefContextStorage;
         }
 
         // refactor after
-        public async Task ProcessCertificateAsync()
+        public async Task AuthenticateAsync()
         {
             // Step 1: Request authentication challenge from KSeF
             var challengeResponse = await _ksefClient.GetAuthChallengeAsync();
@@ -43,6 +47,7 @@ namespace KSF_Integration.API.Services
 
             //Step 5: Send signed document
             var authOperationInfo = await _ksefClient.SubmitXadesAuthRequestAsync(signedXml, verifyCertificateChain: false);
+            _ksefContextStorage.SetAuthData(authOperationInfo.AuthenticationToken.Token, authOperationInfo.AuthenticationToken.ValidUntil);
         }
 
         private static X509Certificate2 GetPersonalCertificate(
