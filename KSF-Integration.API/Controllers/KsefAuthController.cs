@@ -49,7 +49,8 @@ namespace KSF_Integration.API.Controllers
                 {
                     isAuthenticated = true,
                     token = _ksefContextStorage.AuthToken,
-                    validUntil = _ksefContextStorage.ValidUntil
+                    validUntil = _ksefContextStorage.ValidUntil,
+                    status = _ksefContextStorage.AuthStatus,
                 });
             }
             catch (Exception ex)

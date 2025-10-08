@@ -47,7 +47,12 @@ namespace KSF_Integration.API.Services
 
             //Step 5: Send signed document
             var authOperationInfo = await _ksefClient.SubmitXadesAuthRequestAsync(signedXml, verifyCertificateChain: false);
-            _ksefContextStorage.SetAuthData(authOperationInfo.AuthenticationToken.Token, authOperationInfo.AuthenticationToken.ValidUntil);
+
+            //Step 6: Check the autorization status
+            var status = await _ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token);
+
+            _ksefContextStorage.SetAuthData(authOperationInfo.AuthenticationToken.Token,status.Status.Description, authOperationInfo.AuthenticationToken.ValidUntil);
+
         }
 
         private static X509Certificate2 GetPersonalCertificate(

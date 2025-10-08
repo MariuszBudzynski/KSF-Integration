@@ -4,11 +4,13 @@
     {
         public string? AuthToken { get; private set; }
         public DateTime? ValidUntil { get; private set; }
+        public string? AuthStatus { get; private set; }
 
-        public void SetAuthData(string token, DateTime validUntil)
+        public void SetAuthData(string token, string status, DateTime validUntil)
         {
             AuthToken = token;
             ValidUntil = validUntil;
+            AuthStatus = status;
         }
     }
 }
