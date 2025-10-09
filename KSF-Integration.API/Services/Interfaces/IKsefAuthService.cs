@@ -3,5 +3,6 @@
     public interface IKsefAuthService
     {
         Task AuthenticateAsync();
+        Task RefreshAcessToken();
     }
 }

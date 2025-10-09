@@ -51,8 +51,38 @@ namespace KSF_Integration.API.Services
             //Step 6: Check the autorization status
             var status = await _ksefClient.GetAuthStatusAsync(authOperationInfo.ReferenceNumber, authOperationInfo.AuthenticationToken.Token);
 
-            _ksefContextStorage.SetAuthData(authOperationInfo.AuthenticationToken.Token,status.Status.Description, authOperationInfo.AuthenticationToken.ValidUntil);
+            if (status.Status.Code != 200)
+            {
+                throw new InvalidOperationException(
+                    $"Authorization failed"
+                );
+            }
 
+            //Step 6: Retriving acess token
+            var token = await _ksefClient.GetAccessTokenAsync(authOperationInfo.AuthenticationToken.Token);
+
+            _ksefContextStorage.SetAuthData(
+                authOperationInfo.AuthenticationToken.Token,
+                status.Status.Description,
+                authOperationInfo.AuthenticationToken.ValidUntil,
+                token);
+        }
+
+        public async Task RefreshAcessToken()
+        {
+            var refreshTokenObject = _ksefContextStorage.RefreshToken;
+
+            if (refreshTokenObject == null || string.IsNullOrEmpty(refreshTokenObject.Token))
+            {
+                throw new InvalidOperationException(
+                    $"No refresh token available"
+                );
+            }
+
+            var refreshedAccessTokenResponse = await _ksefClient.RefreshAccessTokenAsync(
+                _ksefContextStorage.RefreshToken.Token);
+
+            _ksefContextStorage.RefreshAuthData(refreshedAccessTokenResponse);
         }
 
         private static X509Certificate2 GetPersonalCertificate(

@@ -31,6 +31,20 @@ namespace KSF_Integration.API.Controllers
             }
         }
 
+        [HttpPost("refreshToken")]
+        public async Task<IActionResult> Refresh()
+        {
+            try
+            {
+                await _ksefAuthService.RefreshAcessToken();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
         [HttpGet("status")]
         public async Task<IActionResult> GetStatus()
         {
@@ -48,7 +62,6 @@ namespace KSF_Integration.API.Controllers
                 return Ok(new
                 {
                     isAuthenticated = true,
-                    token = _ksefContextStorage.AuthToken,
                     validUntil = _ksefContextStorage.ValidUntil,
                     status = _ksefContextStorage.AuthStatus,
                 });
