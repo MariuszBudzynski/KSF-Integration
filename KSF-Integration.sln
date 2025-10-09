@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.API", "KSF-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSeF.Client", "KSeF.Client\KSeF.Client.csproj", "{7008FDF7-50B9-75FD-CFEF-D24483A76E2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSF-Integration.Models", "KSF-Integration.Models\KSF-Integration.Models.csproj", "{FF79259F-FC1C-4D05-B93C-B482E88A92CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7008FDF7-50B9-75FD-CFEF-D24483A76E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7008FDF7-50B9-75FD-CFEF-D24483A76E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7008FDF7-50B9-75FD-CFEF-D24483A76E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF79259F-FC1C-4D05-B93C-B482E88A92CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF79259F-FC1C-4D05-B93C-B482E88A92CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF79259F-FC1C-4D05-B93C-B482E88A92CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF79259F-FC1C-4D05-B93C-B482E88A92CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

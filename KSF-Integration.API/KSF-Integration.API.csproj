@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KSeF.Client\KSeF.Client.csproj" />
+    <ProjectReference Include="..\KSF-Integration.Models\KSF-Integration.Models.csproj" />
   </ItemGroup>
 
 </Project>

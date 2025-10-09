@@ -9,69 +9,49 @@ namespace KSF_Integration.API.Controllers
     public class KsefAuthController : ControllerBase
     {
         private readonly IKsefAuthService _ksefAuthService;
-        private readonly KsefContextStorage _ksefContextStorage;
 
-        public KsefAuthController(IKsefAuthService ksefAuthService, KsefContextStorage ksefContextStorage)
+        public KsefAuthController(
+            IKsefAuthService ksefAuthService,
+            KsefContextStorage ksefContextStorage)
         {
             _ksefAuthService = ksefAuthService;
-            _ksefContextStorage = ksefContextStorage;
         }
 
+        /// <summary>
+        /// Performs authentication with KSeF and retrieves an access token.
+        /// </summary>
         [HttpPost("authorize")]
         public async Task<IActionResult> Authorize()
         {
             try
             {
                 await _ksefAuthService.AuthenticateAsync();
-                return Ok();
+                return Ok(new { message = "Authorization successful." });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                return BadRequest(new { error = ex.Message });
             }
         }
 
-        [HttpPost("refreshToken")]
+        /// <summary>
+        /// Refreshes the current access token using the stored refresh token.
+        /// </summary>
+        [HttpPost("refresh-token")]
         public async Task<IActionResult> Refresh()
         {
             try
             {
                 await _ksefAuthService.RefreshAcessToken();
-                return Ok();
+                return Ok(new { message = "Access token refreshed successfully." });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Unauthorized(new { error = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
-            }
-        }
-
-        [HttpGet("status")]
-        public async Task<IActionResult> GetStatus()
-        {
-            try
-            {
-                if (string.IsNullOrEmpty(_ksefContextStorage.AuthToken))
-                {
-                    return Ok(new
-                    {
-                        isAuthenticated = false,
-                        message = "No authentication token stored."
-                    });
-                }
-
-                return Ok(new
-                {
-                    isAuthenticated = true,
-                    validUntil = _ksefContextStorage.ValidUntil,
-                    status = _ksefContextStorage.AuthStatus,
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    error = ex.Message
-                });
+                return BadRequest(new { error = ex.Message });
             }
         }
     }
