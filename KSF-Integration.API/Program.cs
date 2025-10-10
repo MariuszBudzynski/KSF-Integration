@@ -17,6 +17,7 @@ builder.Services.AddKSeFClient(options =>
 
 builder.Services.AddScoped<IKsefAuthService, KsefAuthService>();
 builder.Services.AddScoped<ISignatureService, SignatureService>();
+builder.Services.AddScoped<IKsefInvoiceService, KsefInvoiceService>();
 builder.Services.AddSingleton<KsefContextStorage>();
 
 var app = builder.Build();
