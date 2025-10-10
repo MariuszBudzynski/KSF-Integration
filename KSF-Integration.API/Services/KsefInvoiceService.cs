@@ -76,6 +76,11 @@ namespace KSF_Integration.API.Services
         /// <param name="systemCode">The system code (e.g., FA2 or FA3) defining the invoice schema version.</param>
         private async Task<OpenOnlineSessionResponse> OpenSessionAsync(EncryptionData encryptionData, SystemCodeEnum systemCode)
         {
+            var accessToken = _ksefContextStorage.AccessToken;
+
+            if (accessToken == null || string.IsNullOrEmpty(accessToken.Token))
+                throw new InvalidOperationException("No access token available for KSeF session initialization.");
+
             var openOnlineSessionRequest = OpenOnlineSessionRequestBuilder
                 .Create()
                 .WithFormCode(
@@ -86,11 +91,6 @@ namespace KSF_Integration.API.Services
                     encryptedSymmetricKey: encryptionData.EncryptionInfo.EncryptedSymmetricKey,
                     initializationVector: encryptionData.EncryptionInfo.InitializationVector)
                 .Build();
-
-            var accessToken = _ksefContextStorage.AccessToken;
-
-            if (accessToken == null || string.IsNullOrEmpty(accessToken.Token))
-                throw new InvalidOperationException("No access token available for KSeF session initialization.");
 
             return await _ksefClient.OpenOnlineSessionAsync(openOnlineSessionRequest, accessToken.Token, CancellationToken.None);
         }
